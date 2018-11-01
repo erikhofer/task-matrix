@@ -1,16 +1,16 @@
-export interface State {
-  persons: Person[],
-  tasks: Task[]
+export interface IState {
+  persons: IPerson[],
+  tasks: ITask[]
 }
 
-export interface Entity {
-  id: String;
+export interface IEntity {
+  id: string;
 }
 
-export interface Person extends Entity {
-  name: String;
+export interface IPerson extends IEntity {
+  name: string;
 }
 
-export interface Task extends Entity {
-  name: String;
+export interface ITask extends IEntity {
+  name: string;
 }
