@@ -11,15 +11,17 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <div className="App">
-          <h1><Icon type="table" theme="outlined" /> Task Matrix</h1>
+          <h1>
+            <Icon type="table" theme="outlined" /> Task Matrix
+          </h1>
           <Divider />
           <Route path="/" exact component={Matrix} />
           <Route path="/task" component={EditTask} />
           <Route path="/person" component={EditPerson} />
         </div>
       </BrowserRouter>
-    );
+    )
   }
 }
 
-export default App;
+export default App

@@ -14,9 +14,12 @@
   "scripts": {
     "start": "react-scripts-ts-antd start",
     "build": "react-scripts-ts-antd build",
-    "test": "react-scripts-ts-antd test --env=jsdom",
+    "test": "react-scripts-ts-antd test --env=jsdom --coverage",
     "eject": "react-scripts-ts-antd eject",
-    "lint": "tslint --project . --config tslint.prod.json"
+    "lint": "tslint --project . --config tslint.prod.json",
+    "prettier:verify": "prettier-check src/**/*",
+    "prettier": "prettier --write src/**/*",
+    "verify": "npm-run-all lint prettier:verify test"
   },
   "devDependencies": {
     "@types/jest": "^23.3.9",
@@ -25,6 +28,9 @@
     "@types/react-color": "^2.13.6",
     "@types/react-dom": "^16.0.9",
     "@types/react-router-dom": "^4.3.1",
+    "npm-run-all": "^4.1.3",
+    "prettier": "^1.14.3",
+    "prettier-check": "^2.0.0",
     "typescript": "^3.1.6"
   }
 }

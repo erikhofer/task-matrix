@@ -1,18 +1,18 @@
 export interface IAppState {
-  persons: IPerson[],
+  persons: IPerson[]
   tasks: ITask[]
 }
 
 export interface IEntity {
-  id: string;
+  id: string
 }
 
 export interface IPerson extends IEntity {
-  name: string;
-  color: string;
+  name: string
+  color: string
 }
 
 export interface ITask extends IEntity {
-  name: string;
-  description?: string;
+  name: string
+  description?: string
 }

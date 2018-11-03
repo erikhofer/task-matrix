@@ -6,8 +6,10 @@ export default class Matrix extends React.Component {
   public render() {
     return (
       <div>
-        <Link to="/person"><Button>New Person</Button></Link>
+        <Link to="/person">
+          <Button>New Person</Button>
+        </Link>
       </div>
-    );
+    )
   }
 }
