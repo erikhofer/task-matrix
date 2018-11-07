@@ -15,4 +15,5 @@ export interface IPerson extends IEntity {
 export interface ITask extends IEntity {
   name: string
   description?: string
+  tallies: { [personId: string]: number }
 }

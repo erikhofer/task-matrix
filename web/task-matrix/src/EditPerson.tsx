@@ -28,11 +28,16 @@ const AVAILABLE_COLORS = [
 export default class EditPerson extends React.Component<any, IPerson> {
   constructor(props: any) {
     super(props)
-    this.state = {
-      color:
-        AVAILABLE_COLORS[Math.floor(Math.random() * AVAILABLE_COLORS.length)],
-      id: '1',
-      name: ''
+
+    const id: string = props.match.params.id
+
+    if (id === 'new') {
+      this.state = {
+        color:
+          AVAILABLE_COLORS[Math.floor(Math.random() * AVAILABLE_COLORS.length)],
+        id: null as any,
+        name: ''
+      }
     }
   }
   public render() {
@@ -41,7 +46,16 @@ export default class EditPerson extends React.Component<any, IPerson> {
         entityName="person"
         onSave={this.onSave}
         onDelete={this.onDelete}
-      >
+        loading={this.state == null}
+        renderForm={this.renderForm}
+        create={this.state != null && this.state.id == null}
+      />
+    )
+  }
+
+  private renderForm = () => {
+    return (
+      <div>
         {this.state.color}
         <br />
         <br />
@@ -50,7 +64,7 @@ export default class EditPerson extends React.Component<any, IPerson> {
           onChangeComplete={this.onColorChange}
           colors={AVAILABLE_COLORS}
         />
-      </EditEntity>
+      </div>
     )
   }
 

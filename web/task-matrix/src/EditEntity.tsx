@@ -1,6 +1,7 @@
-import { Alert, Button, Divider, Modal } from 'antd'
+import { Alert, Button, Divider, Modal, Spin } from 'antd'
 import React from 'react'
-import { Link } from 'react-router-dom'
+
+import { history } from './history'
 
 interface IState {
   error?: string
@@ -11,6 +12,8 @@ interface IProps {
   onSave: () => void
   onDelete: () => void
   create?: boolean
+  loading: boolean
+  renderForm: () => JSX.Element
 }
 
 export class EditEntity extends React.Component<IProps, IState> {
@@ -22,7 +25,7 @@ export class EditEntity extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const { children, create, entityName } = this.props
+    const { renderForm, create, entityName, loading } = this.props
 
     return (
       <div>
@@ -30,17 +33,19 @@ export class EditEntity extends React.Component<IProps, IState> {
           {create ? 'Create new' : 'Edit'} {entityName}
         </h2>
         {this.renderError()}
-        {children}
+        {loading ? <Spin size="large" /> : renderForm()}
         <Divider />
         {create ? null : (
-          <Button onClick={this.showDeleteConfirm} type="danger">
+          <Button
+            disabled={loading}
+            onClick={this.showDeleteConfirm}
+            type="danger"
+          >
             Delete
           </Button>
         )}{' '}
-        <Link to="/">
-          <Button>Cancel</Button>
-        </Link>{' '}
-        <Button type="primary" onClick={this.handleSave}>
+        <Button onClick={this.close}>Cancel</Button>{' '}
+        <Button type="primary" disabled={loading} onClick={this.handleSave}>
           Save
         </Button>
       </div>
@@ -58,8 +63,8 @@ export class EditEntity extends React.Component<IProps, IState> {
     }
   }
 
-  private close = () => {
-    // todo
+  private close() {
+    history.replace('/')
   }
 
   private showDeleteConfirm = () =>

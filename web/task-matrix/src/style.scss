@@ -7,3 +7,13 @@ body {
 .App {
   padding: 50px;
 }
+
+.Matrix {
+  table,
+  td {
+  }
+  .cell {
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+}
