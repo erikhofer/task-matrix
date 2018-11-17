@@ -1,8 +1,8 @@
 import React from 'react'
 import { CirclePicker, ColorResult } from 'react-color'
 
+import { Person } from '../store/model'
 import { EditEntity } from './EditEntity'
-import { Person } from './model'
 
 const AVAILABLE_COLORS = [
   '#f44336',

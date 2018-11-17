@@ -1,7 +1,7 @@
 import idb from 'idb'
 import { v4 as generateId } from 'uuid'
 
-import { Person } from './model'
+import { Person } from './store/model'
 
 const PERSONS = 'PERSONS'
 const TASKS = 'TASKS'

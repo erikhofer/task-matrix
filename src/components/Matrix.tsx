@@ -6,10 +6,10 @@ import tallyMarks from 'tally-marks'
 
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import * as actions from './actions'
-import { AppState, Person, TalliesId, Task } from './model'
+import * as actions from '../store/actions'
+import { AppState, Person, TalliesId, Task } from '../store/model'
+import { AppAction } from '../store/reducer'
 import ModeToggler from './ModeToggler'
-import { AppAction } from './reducer'
 
 interface Props extends AppState {
   dispatch: Dispatch<AppAction>

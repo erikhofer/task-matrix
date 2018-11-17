@@ -1,7 +1,7 @@
 import { Alert, Button, Divider, Modal, Spin } from 'antd'
 import React from 'react'
 
-import { history } from './history'
+import { history } from '../history'
 
 interface State {
   error?: string

@@ -2,8 +2,8 @@ import { Button } from 'antd'
 import React from 'react'
 
 import { connect } from 'react-redux'
-import { modeToggle } from './actions'
-import { AppState } from './model'
+import { modeToggle } from '../store/actions'
+import { AppState } from '../store/model'
 
 interface Props {
   incrementMode: boolean
