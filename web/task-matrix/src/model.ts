@@ -1,19 +1,29 @@
-export interface IAppState {
-  persons: IPerson[]
-  tasks: ITask[]
+export interface AppState {
+  readonly persons: ReadonlyArray<Person>
+  readonly tasks: ReadonlyArray<Task>
+  readonly tallies: ReadonlyArray<Tallies>
+  readonly incrementMode: boolean
 }
 
-export interface IEntity {
-  id: string
+export interface Entity<T> {
+  readonly id: T
 }
 
-export interface IPerson extends IEntity {
-  name: string
-  color: string
+export interface Person extends Entity<string> {
+  readonly name: string
+  readonly color: string
 }
 
-export interface ITask extends IEntity {
-  name: string
-  description?: string
-  tallies: { [personId: string]: number }
+export interface Task extends Entity<string> {
+  readonly name: string
+  readonly description?: string
+}
+
+export interface TalliesId {
+  readonly taskId: string
+  readonly personId: string
+}
+
+export interface Tallies extends Entity<TalliesId> {
+  readonly count: number
 }

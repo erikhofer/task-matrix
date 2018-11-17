@@ -4,26 +4,32 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import tallyMarks from 'tally-marks'
 
-import { IAppState, IPerson, ITask } from './model'
+import { connect } from 'react-redux'
+import { Dispatch } from 'redux'
+import * as actions from './actions'
+import { AppState, Person, TalliesId, Task } from './model'
+import ModeToggler from './ModeToggler'
+import { AppAction } from './reducer'
 
-export default class Matrix extends React.Component {
+interface Props extends AppState {
+  dispatch: Dispatch<AppAction>
+}
+
+const mapStateToProps = (state: AppState) => ({ ...state })
+const mapDispatchToProps = (dispatch: Dispatch<AppAction>) => ({
+  dispatch
+})
+
+class Matrix extends React.Component<Props> {
   public render() {
-    const state: IAppState = {
-      persons: [
-        { id: '1', name: 'Justus', color: '#000000' },
-        { id: '2', name: 'Peter', color: '#eeeeee' }
-      ],
-      tasks: [
-        { id: '1', name: 'Moin', tallies: { '1': 4, '2': 6 } },
-        { id: '2', name: 'Hallo', description: 'Das ist ein Task', tallies: {} }
-      ]
-    }
-    const { persons, tasks } = state
+    const { persons, tasks } = this.props
     return (
       <div className="Matrix">
         <table>
           <tr>
-            <td />
+            <td>
+              <ModeToggler />
+            </td>
             {persons.map(this.renderPerson)}
             <td style={{ padding: '0 10px' }}>
               <Link to="/person/new">
@@ -31,7 +37,7 @@ export default class Matrix extends React.Component {
               </Link>
             </td>
           </tr>
-          {tasks.map(task => this.renderTask(task, persons))}
+          {tasks.map(task => this.renderTask(task))}
           <tr>
             <td style={{ padding: '10px 0' }}>
               <Link to="/tast/new">
@@ -44,7 +50,16 @@ export default class Matrix extends React.Component {
     )
   }
 
-  private renderTask(task: ITask, persons: IPerson[]): JSX.Element {
+  private onTallyClick(id: TalliesId) {
+    this.props.dispatch(
+      this.props.incrementMode
+        ? actions.talliesIncrement(id)
+        : actions.talliesDecrement(id)
+    )
+  }
+
+  private renderTask(task: Task): JSX.Element {
+    const { persons } = this.props
     return (
       <tr key={task.id}>
         <td>
@@ -65,11 +80,25 @@ export default class Matrix extends React.Component {
     )
   }
 
-  private renderTallyChart(task: ITask, person: IPerson): JSX.Element {
-    return <td>{tallyMarks(task.tallies[person.id])}</td>
+  private renderTallyChart(task: Task, person: Person): JSX.Element {
+    const tallies = this.props.tallies.find(
+      t => t.id.personId === person.id && t.id.taskId === task.id
+    )
+    const onClick = () =>
+      this.onTallyClick({
+        personId: person.id,
+        taskId: task.id
+      })
+    return (
+      <td>
+        <div className="cell" onClick={onClick}>
+          {tallyMarks(tallies)}
+        </div>
+      </td>
+    )
   }
 
-  private renderPerson(person: IPerson): JSX.Element {
+  private renderPerson(person: Person): JSX.Element {
     const foregroundColor = isDarkColor(person.color) ? 'white' : 'black'
     return (
       <td key={person.id}>
@@ -87,3 +116,8 @@ export default class Matrix extends React.Component {
     )
   }
 }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Matrix)

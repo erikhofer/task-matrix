@@ -2,7 +2,7 @@ import React from 'react'
 import { CirclePicker, ColorResult } from 'react-color'
 
 import { EditEntity } from './EditEntity'
-import { IPerson } from './model'
+import { Person } from './model'
 
 const AVAILABLE_COLORS = [
   '#f44336',
@@ -25,7 +25,7 @@ const AVAILABLE_COLORS = [
   '#607d8b'
 ]
 
-export default class EditPerson extends React.Component<any, IPerson> {
+export default class EditPerson extends React.Component<any, Person> {
   constructor(props: any) {
     super(props)
 

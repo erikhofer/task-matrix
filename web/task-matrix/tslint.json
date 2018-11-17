@@ -1,9 +1,5 @@
 {
-  "extends": [
-    "tslint:recommended",
-    "tslint-react",
-    "tslint-config-prettier"
-  ],
+  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
   "linterOptions": {
     "exclude": [
       "config/**/*.js",
@@ -12,10 +8,8 @@
     ]
   },
   "rules": {
-    "jsx-boolean-value": [
-      true,
-      "never"
-    ]
+    "jsx-boolean-value": [true, "never"],
+    "interface-name": [true, "never-prefix"]
   },
   "defaultSeverity": "warn"
 }

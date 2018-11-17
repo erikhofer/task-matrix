@@ -3,11 +3,11 @@ import React from 'react'
 
 import { history } from './history'
 
-interface IState {
+interface State {
   error?: string
 }
 
-interface IProps {
+interface Props {
   entityName: string
   onSave: () => void
   onDelete: () => void
@@ -16,8 +16,8 @@ interface IProps {
   renderForm: () => JSX.Element
 }
 
-export class EditEntity extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
+export class EditEntity extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props)
     this.state = {
       error: undefined
