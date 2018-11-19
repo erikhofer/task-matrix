@@ -5,16 +5,18 @@ export interface AppState {
   readonly incrementMode: boolean
 }
 
+export type EntityId = string
+
 export interface Entity<T> {
   readonly id: T
 }
 
-export interface Person extends Entity<string> {
+export interface Person extends Entity<EntityId> {
   readonly name: string
   readonly color: string
 }
 
-export interface Task extends Entity<string> {
+export interface Task extends Entity<EntityId> {
   readonly name: string
   readonly description?: string
 }
