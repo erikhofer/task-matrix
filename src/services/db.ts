@@ -1,7 +1,7 @@
 import idb from 'idb'
 import { v4 as generateId } from 'uuid'
 
-import { EntityId, Person, Tallies, TalliesId, Task } from './store/model'
+import { EntityId, Person, Tallies, TalliesId, Task } from '../store/model'
 
 const PERSONS = 'PERSONS'
 const TASKS = 'TASKS'

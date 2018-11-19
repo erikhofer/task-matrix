@@ -60,20 +60,17 @@ function talliesReducer(
 ): ReadonlyArray<Tallies> {
   return produce(state, draft => {
     switch (action.type) {
-      case getType(actions.personDeleted):
-        return draft.filter(tallies => tallies.id.personId !== action.payload)
-      case getType(actions.taskDeleted):
-        return draft.filter(tallies => tallies.id.taskId !== action.payload)
-      case getType(actions.talliesIncrement):
-        draft[findTalliesIndex(draft, action.payload)].count++
+      case getType(actions.talliesAdded):
+        draft.push(action.payload)
         break
-      case getType(actions.talliesDecrement): {
-        const tallies = draft[findTalliesIndex(draft, action.payload)]
-        if (tallies.count > 0) {
-          tallies.count--
-        }
+      case getType(actions.talliesUpdated):
+        draft[findTalliesIndex(draft, action.payload.id)] = action.payload
         break
-      }
+      case getType(actions.talliesDeleted):
+        action.payload.forEach(id =>
+          draft.splice(findTalliesIndex(draft, id), 1)
+        )
+        break
     }
     return
   })
