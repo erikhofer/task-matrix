@@ -5,20 +5,14 @@ import { Link } from 'react-router-dom'
 import tallyMarks from 'tally-marks'
 
 import { connect } from 'react-redux'
-import { Dispatch } from 'redux'
+import { DispatchProps, mapDispatchToProps } from 'src/store'
 import * as actions from '../store/actions'
 import { AppState, Person, TalliesId, Task } from '../store/model'
-import { AppAction } from '../store/reducer'
 import ModeToggler from './ModeToggler'
 
-interface Props extends AppState {
-  dispatch: Dispatch<AppAction>
-}
+interface Props extends AppState, DispatchProps {}
 
 const mapStateToProps = (state: AppState) => ({ ...state })
-const mapDispatchToProps = (dispatch: Dispatch<AppAction>) => ({
-  dispatch
-})
 
 class Matrix extends React.Component<Props> {
   public render() {

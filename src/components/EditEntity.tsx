@@ -13,7 +13,7 @@ interface Props {
   onDelete: () => void
   create?: boolean
   loading: boolean
-  renderForm: () => JSX.Element
+  renderForm: () => React.ReactNode
 }
 
 export class EditEntity extends React.Component<Props, State> {

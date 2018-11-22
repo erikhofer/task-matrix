@@ -1,4 +1,4 @@
-import { Divider, Icon } from 'antd'
+import { Divider, Icon, message } from 'antd'
 import * as React from 'react'
 import { Route, Router } from 'react-router-dom'
 
@@ -6,6 +6,10 @@ import { history } from '../history'
 import EditPerson from './EditPerson'
 import EditTask from './EditTask'
 import Matrix from './Matrix'
+
+message.config({
+  duration: 1
+})
 
 class App extends React.Component {
   public render() {

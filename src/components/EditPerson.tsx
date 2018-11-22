@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import { CirclePicker, ColorResult } from 'react-color'
 
-import { Person } from '../store/model'
+import { Input } from 'antd'
+import { connect } from 'react-redux'
+import { RouteComponentProps } from 'react-router'
+import { DispatchProps, mapDispatchToProps } from 'src/store'
+import { personAdd, personDelete, personUpdate } from 'src/store/actions'
+import { AppState, Person } from '../store/model'
 import { EditEntity } from './EditEntity'
 
 const AVAILABLE_COLORS = [
@@ -25,8 +30,25 @@ const AVAILABLE_COLORS = [
   '#607d8b'
 ]
 
-export default class EditPerson extends React.Component<any, Person> {
-  constructor(props: any) {
+interface EditPersonRouteParams {
+  id: string
+}
+
+interface EditPersonStateProps {
+  allPersons: Person[]
+}
+
+interface EditPersonProps
+  extends DispatchProps,
+    EditPersonStateProps,
+    RouteComponentProps<EditPersonRouteParams> {}
+
+const mapStateToProps = (state: AppState) => ({
+  allPersons: state.persons
+})
+
+class EditPerson extends React.Component<EditPersonProps, Person> {
+  constructor(props: EditPersonProps) {
     super(props)
 
     const id: string = props.match.params.id
@@ -38,6 +60,10 @@ export default class EditPerson extends React.Component<any, Person> {
         id: null as any,
         name: ''
       }
+    } else {
+      this.state =
+        this.props.allPersons.find(person => person.id === id) ||
+        ((null as unknown) as Person) // load indefinitely
     }
   }
   public render() {
@@ -56,7 +82,12 @@ export default class EditPerson extends React.Component<any, Person> {
   private renderForm = () => {
     return (
       <div>
-        {this.state.color}
+        <Input
+          addonBefore="Name"
+          style={{ maxWidth: '300px' }}
+          value={this.state.name}
+          onChange={this.onNameChange}
+        />
         <br />
         <br />
         <CirclePicker
@@ -68,15 +99,30 @@ export default class EditPerson extends React.Component<any, Person> {
     )
   }
 
+  private onNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    this.setState({
+      name: event.target.value
+    })
+  }
+
   private onColorChange = (color: ColorResult) =>
     this.setState({
       color: color.hex
     })
 
   private onSave = () => {
-    // todo
+    if (this.state.id == null) {
+      this.props.dispatch(personAdd(this.state))
+    } else {
+      this.props.dispatch(personUpdate(this.state))
+    }
   }
   private onDelete = () => {
-    // todo
+    this.props.dispatch(personDelete(this.state.id))
   }
 }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditPerson)

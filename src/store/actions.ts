@@ -2,6 +2,8 @@ import { createStandardAction } from 'typesafe-actions'
 
 import { EntityId, Person, Tallies, TalliesId, Task } from './model'
 
+// TODO: consider using createAsyncAction, see https://github.com/piotrwitek/typesafe-actions#createasyncaction
+
 export const personAdded = createStandardAction('person/ADDED')<Person>()
 export const personUpdated = createStandardAction('person/UPDATED')<Person>()
 export const personDeleted = createStandardAction('person/DELETED')<EntityId>()
