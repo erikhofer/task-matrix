@@ -21,31 +21,33 @@ class Matrix extends React.Component<Props> {
     return (
       <div className="Matrix">
         <table>
-          <tr>
-            <td>
-              <ModeToggler />
-            </td>
-            {persons.map(this.renderPerson)}
-            <td
-              style={{
-                padding: '0 10px',
-                textAlign: noItems ? 'right' : 'left'
-              }}
-            >
-              <Link to="/person/new">
-                <Button>Add Person</Button>
-              </Link>
-            </td>
-          </tr>
-          {tasks.map(task => this.renderTask(task))}
-          <tr>
-            <td style={{ padding: '10px 0' }}>
-              <Link to="/task/new">
-                <Button>Add Task</Button>
-              </Link>
-            </td>
-            {this.renderInitialHint(noItems)}
-          </tr>
+          <tbody>
+            <tr>
+              <td>
+                <ModeToggler />
+              </td>
+              {persons.map(this.renderPerson)}
+              <td
+                style={{
+                  padding: '0 10px',
+                  textAlign: noItems ? 'right' : 'left'
+                }}
+              >
+                <Link to="/person/new">
+                  <Button>Add Person</Button>
+                </Link>
+              </td>
+            </tr>
+            {tasks.map(task => this.renderTask(task))}
+            <tr>
+              <td style={{ padding: '10px 0' }}>
+                <Link to="/task/new">
+                  <Button>Add Task</Button>
+                </Link>
+              </td>
+              {this.renderInitialHint(noItems)}
+            </tr>
+          </tbody>
         </table>
       </div>
     )
@@ -68,9 +70,10 @@ class Matrix extends React.Component<Props> {
 
   private onTallyClick(id: TalliesId) {
     this.props.dispatch(
-      this.props.incrementMode
-        ? actions.talliesIncrement(id)
-        : actions.talliesDecrement(id)
+      actions.talliesChangeCount({
+        diff: this.props.incrementMode ? 1 : -1,
+        id
+      })
     )
   }
 
@@ -123,9 +126,11 @@ class Matrix extends React.Component<Props> {
         taskId: task.id
       })
     return (
-      <td>
+      <td key={task.id + person.id}>
         <div className="cell" onClick={onClick}>
-          {tallyMarks(tallies) || '\u00A0'}
+          {tallies === undefined || tallies.count === 0
+            ? '\u00A0'
+            : tallyMarks(tallies.count)}
         </div>
       </td>
     )

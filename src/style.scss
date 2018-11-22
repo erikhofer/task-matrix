@@ -12,6 +12,8 @@ body {
   .cell {
     padding: 10px;
     border: 1px solid #ccc;
+    cursor: pointer;
+    user-select: none;
   }
   .initial-hint {
     padding: 10px;

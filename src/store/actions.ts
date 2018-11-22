@@ -24,11 +24,9 @@ export const talliesUpdated = createStandardAction('tallies/UPDATED')<Tallies>()
 export const talliesDeleted = createStandardAction('tallies/DELETED')<
   TalliesId[]
 >()
-export const talliesIncrement = createStandardAction('tallies/INCREMENT')<
-  TalliesId
->()
-export const talliesDecrement = createStandardAction('tallies/DECREMENT')<
-  TalliesId
->()
+export const talliesChangeCount = createStandardAction('tallies/CHANGE_COUNT')<{
+  id: TalliesId
+  diff: number
+}>()
 
 export const modeToggle = createStandardAction('mode/TOGGLE')<void>()
