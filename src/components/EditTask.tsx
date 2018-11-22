@@ -97,6 +97,9 @@ class EditTask extends React.Component<EditTaskProps, Task> {
     })
 
   private onSave = () => {
+    if (this.state.name.trim() === '') {
+      throw new Error('Name is required!')
+    }
     const task = { ...this.state }
     // normalize empty string to undefined
     if (task.description != null && task.description.trim() === '') {

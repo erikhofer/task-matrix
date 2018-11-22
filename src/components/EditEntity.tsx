@@ -57,9 +57,8 @@ export class EditEntity extends React.Component<Props, State> {
       this.props.onSave()
       this.close()
     } catch (e) {
-      throw e
       this.setState({
-        error: JSON.stringify(e)
+        error: e.message
       })
     }
   }
@@ -86,12 +85,15 @@ export class EditEntity extends React.Component<Props, State> {
   private renderError = () => {
     if (this.state.error) {
       return (
-        <Alert
-          message="Error"
-          description={this.state.error}
-          type="error"
-          showIcon
-        />
+        <div>
+          <Alert
+            message="Error"
+            description={this.state.error}
+            type="error"
+            showIcon
+          />
+          <br />
+        </div>
       )
     }
     return null

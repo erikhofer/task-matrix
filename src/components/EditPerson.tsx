@@ -111,6 +111,9 @@ class EditPerson extends React.Component<EditPersonProps, Person> {
     })
 
   private onSave = () => {
+    if (this.state.name.trim() === '') {
+      throw new Error('Name is required!')
+    }
     if (this.state.id == null) {
       this.props.dispatch(personAdd(this.state))
     } else {
