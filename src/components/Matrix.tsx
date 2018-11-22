@@ -1,4 +1,4 @@
-import { Button, Tooltip } from 'antd'
+import { Button, Icon, Tooltip } from 'antd'
 import isDarkColor from 'is-dark-color'
 import React from 'react'
 import { Link } from 'react-router-dom'
@@ -17,6 +17,7 @@ const mapStateToProps = (state: AppState) => ({ ...state })
 class Matrix extends React.Component<Props> {
   public render() {
     const { persons, tasks } = this.props
+    const noItems = persons.length === 0 && tasks.length === 0
     return (
       <div className="Matrix">
         <table>
@@ -25,7 +26,12 @@ class Matrix extends React.Component<Props> {
               <ModeToggler />
             </td>
             {persons.map(this.renderPerson)}
-            <td style={{ padding: '0 10px' }}>
+            <td
+              style={{
+                padding: '0 10px',
+                textAlign: noItems ? 'right' : 'left'
+              }}
+            >
               <Link to="/person/new">
                 <Button>Add Person</Button>
               </Link>
@@ -38,10 +44,26 @@ class Matrix extends React.Component<Props> {
                 <Button>Add Task</Button>
               </Link>
             </td>
+            {this.renderInitialHint(noItems)}
           </tr>
         </table>
       </div>
     )
+  }
+
+  private renderInitialHint(noItems: boolean) {
+    if (noItems) {
+      return (
+        <td>
+          <div className="initial-hint">
+            <Icon type="arrow-left" />
+            <span> Start by adding something </span>
+            <Icon type="arrow-up" />
+          </div>
+        </td>
+      )
+    }
+    return null
   }
 
   private onTallyClick(id: TalliesId) {
@@ -86,7 +108,7 @@ class Matrix extends React.Component<Props> {
     return (
       <td>
         <div className="cell" onClick={onClick}>
-          {tallyMarks(tallies)}
+          {tallyMarks(tallies) || '\u00A0'}
         </div>
       </td>
     )

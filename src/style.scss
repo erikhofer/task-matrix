@@ -9,11 +9,14 @@ body {
 }
 
 .Matrix {
-  table,
-  td {
-  }
   .cell {
     padding: 10px;
     border: 1px solid #ccc;
+  }
+  .initial-hint {
+    padding: 10px;
+    vertical-align: center;
+    height: 100%;
+    line-height: 100%;
   }
 }
