@@ -34,7 +34,7 @@ class Matrix extends React.Component<Props> {
           {tasks.map(task => this.renderTask(task))}
           <tr>
             <td style={{ padding: '10px 0' }}>
-              <Link to="/tast/new">
+              <Link to="/task/new">
                 <Button>Add Task</Button>
               </Link>
             </td>

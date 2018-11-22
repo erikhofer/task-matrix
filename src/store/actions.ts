@@ -14,9 +14,10 @@ export const personDelete = createStandardAction('person/DELETE')<EntityId>()
 export const taskAdded = createStandardAction('task/ADDED')<Task>()
 export const taskUpdated = createStandardAction('task/UPDATED')<Task>()
 export const taskDeleted = createStandardAction('task/DELETED')<EntityId>()
-export const taskAdd = createStandardAction('task/ADD')<Task>()
-export const taskUpdate = createStandardAction('task/UPDATE')<Task>()
-export const taskDelete = createStandardAction('task/DELETE')<EntityId>()
+// see ./thunks.ts
+// export const taskAdd = createStandardAction('task/ADD')<Task>()
+// export const taskUpdate = createStandardAction('task/UPDATE')<Task>()
+// export const taskDelete = createStandardAction('task/DELETE')<EntityId>()
 
 export const talliesAdded = createStandardAction('tallies/ADDED')<Tallies>()
 export const talliesUpdated = createStandardAction('tallies/UPDATED')<Tallies>()

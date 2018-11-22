@@ -24,7 +24,7 @@ export const personUpdateEpic: AppEpic = (action$, state$, { db }) =>
       await db.updatePerson(action.payload)
       return action.payload
     }),
-    tap(() => message.success('Person updated')),
+    tap(() => message.success('Person saved')),
     map(person => actions.personUpdated(person))
   )
 

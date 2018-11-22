@@ -57,8 +57,9 @@ export class EditEntity extends React.Component<Props, State> {
       this.props.onSave()
       this.close()
     } catch (e) {
+      throw e
       this.setState({
-        error: e
+        error: JSON.stringify(e)
       })
     }
   }
