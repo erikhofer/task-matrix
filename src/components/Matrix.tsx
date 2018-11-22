@@ -1,4 +1,4 @@
-import { Button, Icon, Tooltip } from 'antd'
+import { Button, Icon, Popover, Tooltip } from 'antd'
 import isDarkColor from 'is-dark-color'
 import React from 'react'
 import { Link } from 'react-router-dom'
@@ -88,12 +88,29 @@ class Matrix extends React.Component<Props> {
               >
                 {task.name}
               </Tooltip>
+              {this.renderDescription(task)}
             </div>
           </Link>
         </td>
         {persons.map(person => this.renderTallyChart(task, person))}
       </tr>
     )
+  }
+
+  private renderDescription(task: Task) {
+    if (task.description) {
+      return (
+        <Popover
+          content={task.description}
+          title="Description"
+          placement="right"
+        >
+          {' '}
+          <Icon type="info-circle" theme="filled" />
+        </Popover>
+      )
+    }
+    return null
   }
 
   private renderTallyChart(task: Task, person: Person): JSX.Element {
