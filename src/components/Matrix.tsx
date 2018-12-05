@@ -23,7 +23,7 @@ class Matrix extends React.Component<Props> {
         <table>
           <tbody>
             <tr>
-              <td>
+              <td style={{ textAlign: 'center' }}>
                 <ModeToggler />
               </td>
               {persons.map(this.renderPerson)}

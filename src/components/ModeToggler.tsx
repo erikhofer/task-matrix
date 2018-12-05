@@ -1,6 +1,7 @@
-import { Button } from 'antd'
+import { Button, Radio } from 'antd'
 import React from 'react'
 
+import { RadioChangeEvent } from 'antd/lib/radio'
 import { connect } from 'react-redux'
 import { modeToggle } from '../store/actions'
 import { AppState } from '../store/model'
@@ -17,10 +18,22 @@ const mapStateToProps = (state: AppState) => ({
 class ModeToggler extends React.Component<Props> {
   public render() {
     return (
-      <Button onClick={this.props.onToggle}>
-        {this.props.incrementMode ? '++' : '--'}
-      </Button>
+      <Radio.Group
+        defaultValue={this.props.incrementMode ? '++' : '--'}
+        buttonStyle="solid"
+        onChange={this.onChange}
+      >
+        <Radio.Button value="--">--</Radio.Button>
+        <Radio.Button value="++">++</Radio.Button>
+      </Radio.Group>
     )
+  }
+
+  public onChange = (e: RadioChangeEvent) => {
+    const newIncrementMode = e.target.value === '++'
+    if (newIncrementMode !== this.props.incrementMode) {
+      this.props.onToggle()
+    }
   }
 }
 
