@@ -5,6 +5,7 @@ import { Services } from 'src/services'
 import {
   personAdded,
   talliesAdded,
+  talliesDeleted,
   taskAdded,
   taskDeleted,
   taskUpdated
@@ -48,6 +49,13 @@ export const taskDelete: AppThunk = (id: EntityId) => async (
   { db }
 ) => {
   await db.deleteTask(id)
+  const talliesIdsOfDeletedTask = getState()
+    .tallies.filter(t => t.id.taskId === id)
+    .map(t => t.id)
+  for (const talliesId of talliesIdsOfDeletedTask) {
+    await db.deleteTallies(talliesId)
+  }
+  dispatch(talliesDeleted(talliesIdsOfDeletedTask))
   dispatch(taskDeleted(id))
   message.success('Task deleted')
 }

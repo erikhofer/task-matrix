@@ -2,8 +2,14 @@ import { SagaIterator } from 'redux-saga'
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 import { db } from 'src/services'
 import { ActionType, getType } from 'typesafe-actions'
-import { talliesAdded, talliesChangeCount, talliesUpdated } from './actions'
-import { AppState, Tallies } from './model'
+import {
+  personDelete,
+  talliesAdded,
+  talliesChangeCount,
+  talliesDeleted,
+  talliesUpdated
+} from './actions'
+import { AppState, Tallies, TalliesId } from './model'
 
 function* talliesChangeCountSaga(
   action: ActionType<typeof talliesChangeCount>
@@ -31,6 +37,20 @@ function* talliesChangeCountSaga(
   }
 }
 
+export function* personDeleteSaga(
+  action: ActionType<typeof personDelete>
+): SagaIterator {
+  const personId = action.payload
+  const talliesIdsOfDeletedPerson: TalliesId[] = yield select<AppState>(state =>
+    state.tallies.filter(t => t.id.personId === personId).map(t => t.id)
+  )
+  for (const talliesId of talliesIdsOfDeletedPerson) {
+    yield call(db.deleteTallies, talliesId)
+  }
+  yield put(talliesDeleted(talliesIdsOfDeletedPerson))
+}
+
 export function* appSaga(): Generator {
   yield takeEvery(getType(talliesChangeCount), talliesChangeCountSaga)
+  yield takeEvery(getType(personDelete), personDeleteSaga)
 }
