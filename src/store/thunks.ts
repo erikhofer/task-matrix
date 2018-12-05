@@ -2,7 +2,13 @@ import { message } from 'antd'
 import { ActionCreator } from 'redux'
 import { ThunkAction, ThunkDispatch } from 'redux-thunk'
 import { Services } from 'src/services'
-import { taskAdded, taskDeleted, taskUpdated } from './actions'
+import {
+  personAdded,
+  talliesAdded,
+  taskAdded,
+  taskDeleted,
+  taskUpdated
+} from './actions'
 import { AppState, EntityId, Task } from './model'
 import { AppAction } from './reducer'
 
@@ -44,4 +50,17 @@ export const taskDelete: AppThunk = (id: EntityId) => async (
   await db.deleteTask(id)
   dispatch(taskDeleted(id))
   message.success('Task deleted')
+}
+
+export const loadInitialState: AppThunk = () => async (
+  dispatch,
+  getState,
+  { db }
+) => {
+  const persons = await db.getAllPersons()
+  const tasks = await db.getAllTasks()
+  const tallies = await db.getAllTallies()
+  persons.forEach(p => dispatch(personAdded(p)))
+  tasks.forEach(t => dispatch(taskAdded(t)))
+  tallies.forEach(t => dispatch(talliesAdded(t)))
 }

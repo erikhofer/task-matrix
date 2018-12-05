@@ -5,7 +5,7 @@ import * as ReactDOM from 'react-dom'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 import { Provider } from 'react-redux'
-import { applyMiddleware, createStore } from 'redux'
+import { applyMiddleware, createStore, Store } from 'redux'
 import { createEpicMiddleware } from 'redux-observable'
 import createSagaMiddleware from 'redux-saga'
 import thunk from 'redux-thunk'
@@ -16,6 +16,7 @@ import { appEpic } from './store'
 import { AppState } from './store/model'
 import { AppAction, reducer } from './store/reducer'
 import { appSaga } from './store/sagas'
+import { AppThunkDispatch, loadInitialState } from './store/thunks'
 
 const services: Services = {
   db
@@ -32,7 +33,7 @@ const epicMiddleware = createEpicMiddleware<
 
 const sagaMiddleware = createSagaMiddleware()
 
-const store = createStore(
+const store: Store<AppState, AppAction> = createStore(
   reducer,
   composeWithDevTools(
     applyMiddleware(
@@ -45,6 +46,9 @@ const store = createStore(
 
 epicMiddleware.run(appEpic)
 sagaMiddleware.run(appSaga)
+
+const thunkDispatch: AppThunkDispatch = store.dispatch // to avoid this, type store properly with ThunkStore
+thunkDispatch(loadInitialState())
 
 ReactDOM.render(
   <Provider store={store}>
