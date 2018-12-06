@@ -1,6 +1,6 @@
 # Task Matrix
 
-Tool to manage a number of tasks that are shared by multiple people.
+Tool to manage a number of tasks that are shared by multiple people. Try it at https://task-matrix.netlify.com/
 
 ![Screenshot](https://raw.githubusercontent.com/erikhofer/task-matrix/master/screenshot.png)
 
