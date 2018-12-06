@@ -1,4 +1,4 @@
-import { Button, Radio } from 'antd'
+import { Radio } from 'antd'
 import React from 'react'
 
 import { RadioChangeEvent } from 'antd/lib/radio'
